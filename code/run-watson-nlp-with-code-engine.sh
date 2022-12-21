@@ -45,9 +45,9 @@ function connectToModelsInIBMContainerRegistry () {
     echo "# Connect to IBM Cloud Container Image Registry: $IMAGE_REGISTRY"
     echo "# ******"
     echo ""
-    echo "CONTAINER_ENTITLEMENT_KEY: $CONTAINER_ENTITLEMENT_KEY"
+    echo "IBM_ENTITLEMENT_KEY: $IBM_ENTITLEMENT_KEY"
     echo ""
-    docker login cp.icr.io --username cp --password $CONTAINER_ENTITLEMENT_KEY
+    docker login cp.icr.io --username cp --password $IBM_ENTITLEMENT_KEY
 }
 
 function listModelArray () {
