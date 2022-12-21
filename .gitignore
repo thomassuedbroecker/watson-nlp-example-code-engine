@@ -1,5 +1,6 @@
 # custom
 .DS_Store
+/code/models
 
 # dotenv environment variables file
 .env
