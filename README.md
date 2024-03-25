@@ -1,6 +1,6 @@
 # Run Watson NLP for Embed with Code Engine on IBM Cloud
 
-This is example how to use Watson NLP based on the official example documentation:[`IBM Watson Libraries for Embed`](https://www.ibm.com/docs/en/watson-libraries?topic=watson-natural-language-processing-library-embed-home).
+This is an example how to use Watson NLP based on the official example documentation:[`IBM Watson Libraries for Embed`](https://www.ibm.com/docs/en/watson-libraries?topic=watson-natural-language-processing-library-embed-home).
 
 Related blog post [`Run Watson NLP for Embed on IBM Cloud Code Engine`](https://suedbroecker.net/2022/12/21/run-watson-nlp-for-embed-on-ibm-cloud-code-engine/).
 

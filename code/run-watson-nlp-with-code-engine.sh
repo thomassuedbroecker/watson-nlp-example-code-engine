@@ -74,16 +74,24 @@ function downloadTheModels() {
     echo "# ******"
     echo ""
 
-    mkdir $(pwd)/$TEMP_MODEL_DIR
+    ${CONTAINER_RUNTIME} login cp.icr.io --username cp --password ${IBM_ENTITLEMENT_KEY}
+
+    # Clear out existing volume
+    ${CONTAINER_RUNTIME} volume rm MODEL_DATA 2>/dev/null || true
+
+    # Create a shared volume and initialize with open permissions
+    echo "# 0. Create a volume to save the model locally"	
+    ${CONTAINER_RUNTIME} volume create --label MODEL_DATA
 
     echo "# 1. Run a container in an interactive mode to set the permissions"
-    docker run --rm --name $MODEL_CONTAINERS_NAME -it -v "$(pwd)/$TEMP_MODEL_DIR":/model_data $DOWNLOAD_IMAGE chmod 777 /model_data
+    ${CONTAINER_RUNTIME} build -f ./DownloadModel.Dockerfile -t downloadmodel:v1.0.0 .
+    ${CONTAINER_RUNTIME} run --rm --name $MODEL_CONTAINERS_NAME -it -v MODEL_DATA:/model_data downloadmodel:v1.0.0 chmod 777 /model_data
 
     echo "# 2. Put models into the file share"
     i=0
     for model in "${models_arr[@]}"
     do
-        docker run --rm --name $MODEL_CONTAINERS_NAME -it -v "$(pwd)/models":/app/models -e ACCEPT_LICENSE=true $IMAGE_REGISTRY/$model
+        ${CONTAINER_RUNTIME} run --rm --name $MODEL_CONTAINERS_NAME -it -v MODEL_DATA:/app/models -e ACCEPT_LICENSE=true $IMAGE_REGISTRY/$model
         i=$((i+1))
         echo "$i $MODEL_CONTAINERS_NAME $IMAGE_REGISTRY/$model"
     done
